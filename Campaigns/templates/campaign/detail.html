@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ campaign.name }}{% endblock %}
+
+{% block content %}
+  <div class="grid grid-cols-5 gap-6">
+    <div class="col-span-3 bg-blue-200 rounded-xl">
+      <img src="{{ campaign.image.url }}" class="rounded-t-xl" alt="{{ campaign.name }} image">
+    </div>
+    <div class="col-span-2 bg-green-200 p-4 rounded-lg">
+      <h2 class="mb-6 text-3xl">
+        {{ campaign.name }}
+      </h2>
+      {# Add more details or calls to action here #}
+    </div>
+  </div>
+{% endblock %}
+
