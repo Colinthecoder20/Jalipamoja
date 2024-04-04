@@ -1,0 +1,67 @@
+{% extends 'core/base.html'%}
+
+{% block title %} Welcome {% endblock %}
+
+
+
+{% block content %}
+
+<body class="">
+
+    <!-- Hero section -->
+    <div class="container mx-auto py-8">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl font-bold mb-4">Empowering Communities Through Generosity</h1>
+            <p class="text-lg text-gray-700">Join us in making a difference. Together, we can create a better world for
+                everyone.</p>
+        </div>
+    </div>
+
+
+    
+        <div class="mt-6 px-6 py-12 bg-slate-900 rounded-xl">
+            <h2 class="text-2xl text-center font-bold text-white mb-4">Featured Campaigns</h2>
+                <!-- Campaign cards -->
+                <div class="grid grid-cols-3 gap-3">
+                    {% for campaign in campaigns %}
+                    <div>
+                        <a href="{% url 'campaign:detail' campaign.id %}" class="text-zinc-950 font-medium hover:underline">
+                            <div>
+                                <img src="{{ campaign.image.url }}" class="rounded-t-xl">
+                                
+                            </div>
+                            <div class="p-3 bg-current rounded-b-xl">
+                                <h2 class="text-indigo-300 text-center"> {{ campaign.name }} </h2>
+                                <p class="text-indigo-300 text-center"> {{ campaign.category }}</p>
+                            </div>
+                        </a>
+                        
+                    </div>
+                {% endfor%}     
+                </div>    
+        </div>
+        <div class="bg-slate-500 py-3">
+            <div class="container mx-auto">
+                <h2 class="text-2xl text-center text-zinc-800 font-bold mb-4">Browse Categories</h2>
+                
+                   
+                <div class="grid grid-cols-3 gap-3">
+                    {%for category in categories %}
+                        <div>
+                            <a href="{% url 'campaign:campaigns' %}" class="text-green-50 font-medium hover:underline">
+                                <div>
+                                    
+                                </div>
+                                <div class="p-6 bg-slate-500 rounded-b-xl">
+                                    <h2 class="text-2xl"> {{ category.name }} </h2>
+                                    <p class="text-black-500">{{ category.campaigns.count }}</p>
+    
+                                </div>
+                            </a>
+                            
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </body>
+{% endblock %}

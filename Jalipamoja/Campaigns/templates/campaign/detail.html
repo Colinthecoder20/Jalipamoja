@@ -1,0 +1,57 @@
+
+{% extends 'core/base.html' %}
+
+{% block title %}{{ campaign.name }}{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-5 gap-6">
+    <div class="col-span-3">
+        <img src="{{ campaign.image.url }}" class="rounded-xl">
+    </div>
+
+    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+        <h1 class="mb-6 text-3xl">{{ campaign.name }}</h1>
+        <p class="text-gray-500"><strong>Goal: </strong>{{ campaign.amount }}</p>
+        <p class="text-gray-500"><strong>Beneficiary: </strong>{{ campaign.created_by.username }}</p>
+    
+        {% if campaign.description %}
+            <p class="text-gray-700">
+                <strong class="text-gray-500">Description:</strong><br>
+                {{ campaign.description }}
+            </p>
+        {% endif %}
+
+        {% if request.user == campaign.created_by %}
+            <div class="mt-6 p-6 bg-white rounded-xl">
+                <p>Your Campaign</p>
+
+                <a href="{% url 'campaign:edit' campaign.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-blue-500 text-white rounded-xl">Edit</a>
+                <a href="{% url 'campaign:delete' campaign.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+            </div>
+        {% else %}  
+            <a href="#" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-blue-500 text-white rounded-xl hover:bg-teal-700">Contact Beneficiary</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Related Campaigns</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+        {% for campaign in related_campaigns %}
+            <div>
+                <a href="{% url 'campaign:detail' campaign.id %}">
+                    <div>
+                        <img src="{{ campaign.image.url }}" class="rounded-t-xl">
+                    </div>
+
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2xl">{{ campaign.name }}</h2>
+                        <p class="text-gray-500">Goal: {{ campaign.amount }}</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
