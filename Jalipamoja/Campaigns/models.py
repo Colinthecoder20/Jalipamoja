@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 
 class Category(models.Model):
@@ -16,9 +16,9 @@ class Campaign(models.Model):
     name = models.CharField(max_length=255)   
     description = models.TextField(blank=True, null=True)
     amount = models.FloatField()
-    image = models.ImageField(upload_to='Campaign_images', blank=False, null=False)
+    image = models.ImageField(blank=True, null=True)
     is_closed = models.BooleanField(default=False)
-    created_by = models.ForeignKey(User, related_name='Campaigns', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='Campaigns', on_delete=models.CASCADE)
     
     created_at = models.DateTimeField(auto_now_add=True)
     
